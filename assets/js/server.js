@@ -11,18 +11,27 @@ const createConnection = () => {
 };
 
 //the main menu function will be called first and will prompt the user to choose what they would like to do
-const mainMenu(){
+const mainMenu = () => {
     return inquirer.prompt({
         type: 'input',
         name: 'initialize',
         message: 'What would you like to do?',
         choices: ['Add Department', 'Add Role', 'Add Employee', 'View Departments', 'View Roles', 'View Employees', 'Update Employee Role', 'Exit']
     })
-}
+};
 
 //the following select case will be used to determine which function to call based on the user's choice
 mainMenu().then(answers => {
     switch (answers) {
+        case 'View Departments':
+            viewDepartments();
+            break;
+        case 'View Roles':
+            viewRoles();
+            break;
+        case 'View Employees':
+            viewEmployees();
+            break
         case 'Add Department':
             addDepartment();
             break;
@@ -39,12 +48,25 @@ mainMenu().then(answers => {
     }
 });
 
+const viewDepartments = () => {
+    employee_tracker_db.promise().query('SELECT * FROM department', (err, results) => {
+
+        if (err) {
+            console.log(err);
+        }
+        console.table(results);
+    });
+};
+
+
 function addDepartment() {
     return inquirer.prompt({
         type: 'input',
         name: 'adding a department',
         message: 'What will this department be called?',
     })
+    //add a .then to record the response
+
 }
 
 function addRole() {
@@ -102,7 +124,7 @@ function updateEmployeeRole() {
 inquirer
     .prompt([
         {
-            type: 'input',
+            type: 'list',
             name: 'initialize',
             message: 'What would you like to do?',
             choices: ['Add Department', 'Add Role', 'Add Employee', 'View Departments', 'View Roles', 'View Employees', 'Update Employee Role', 'Exit'],
