@@ -49,15 +49,11 @@ mainMenu().then(answers => {
 });
 
 const viewDepartments = () => {
-    employee_tracker_db.promise().query('SELECT * FROM department', (err, results) => {
-
-        if (err) {
-            console.log(err);
-        }
-        console.table(results);
-    });
-};
-
+    employee_tracker_db.promise().query(
+        'SELECT * FROM department').then((response) => {     
+        console.table(response)
+        }).then(() => mainMenu());
+    };
 
 function addDepartment() {
     return inquirer.prompt({
