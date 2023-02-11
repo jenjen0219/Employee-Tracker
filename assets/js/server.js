@@ -55,6 +55,19 @@ const viewDepartments = () => {
         }).then(() => mainMenu());
     };
 
+    const viewEmployees = () => {
+        employee_tracker_db.promise().query(
+            'SELECT * FROM employees').then((response) => {     
+            console.table(response)
+            }).then(() => mainMenu());
+        };
+
+        const viewRoles = () => {
+            employee_tracker_db.promise().query(
+                'SELECT * FROM roles').then((response) => {     
+                console.table(response)
+                }).then(() => mainMenu());
+            };
 function addDepartment() {
     return inquirer.prompt({
         type: 'input',
